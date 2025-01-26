@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<idea-plugin>
+    <extensions defaultExtensionNs="com.intellij">
+        <applicationService serviceImplementation="com.modulith.handlernavigator.ClassFinderAction"/>
+    </extensions>
+</idea-plugin>
