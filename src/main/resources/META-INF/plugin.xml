@@ -13,7 +13,11 @@
     <!-- Description of the plugin displayed on the Plugin Page and IDE Plugin Manager.
          Simple HTML elements (text formatting, paragraphs, and lists) can be added inside of <![CDATA[ ]]> tag.
          Guidelines: https://plugins.jetbrains.com/docs/marketplace/plugin-overview-page.html#plugin-description -->
-    <description>Hello word Hello wordHello wordHello wordHello wordHello wordHello wordHello word</description>
+    <description>
+        <![CDATA[
+        Hello world! Plugin for navigating between controllers and their handlers.
+        ]]>
+    </description>
     <version>2</version>
 
     <!-- Product and plugin compatibility requirements.
@@ -21,11 +25,11 @@
     <depends>com.intellij.modules.platform</depends>
     <depends>org.jetbrains.kotlin</depends>
     <depends>com.intellij.modules.java</depends>
-    <!-- Extension points defined by the plugin.
-         Read more: https://plugins.jetbrains.com/docs/intellij/plugin-extension-points.html -->
+
     <extensions defaultExtensionNs="com.intellij">
         <codeInsight.lineMarkerProvider
                 language="JAVA"
                 implementationClass="com.modulith.handlernavigator.HandlerNavigatorProvider" />
     </extensions>
+
 </idea-plugin>
