@@ -24,11 +24,8 @@
     <!-- Extension points defined by the plugin.
          Read more: https://plugins.jetbrains.com/docs/intellij/plugin-extension-points.html -->
     <extensions defaultExtensionNs="com.intellij">
-        <applicationService serviceImplementation="com.modulith.handlernavigator.ClassFinderAction"/>
+        <codeInsight.lineMarkerProvider
+                language="JAVA"
+                implementationClass="com.modulith.handlernavigator.HandlerNavigatorProvider" />
     </extensions>
-    <actions>
-        <action id="ClassFinderAction" class="com.modulith.handlernavigator.ClassFinderAction" text="Find Classes" description="Find all Java classes starting with 'A'">
-            <add-to-group group-id="ToolsMenu" anchor="last"/>
-        </action>
-    </actions>
 </idea-plugin>
