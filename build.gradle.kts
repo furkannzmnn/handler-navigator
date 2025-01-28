@@ -45,6 +45,6 @@ tasks {
     }
 
     publishPlugin {
-        token.set(System.getenv("PUBLISH_TOKEN"))
+        token.set("perm-b3ptZW5mOTc=.OTItMTE2NzU=.BkhTuPSXchadTP2RHDvewDO1L6BPTO")
     }
 }

@@ -5,7 +5,7 @@
 
     <!-- Public plugin name should be written in Title Case.
          Guidelines: https://plugins.jetbrains.com/docs/marketplace/plugin-overview-page.html#plugin-name -->
-    <name>Handler-navigator</name>
+    <name>Handler-Navigator</name>
 
     <!-- A displayed Vendor name or Organization ID displayed on the Plugins Page. -->
     <vendor email="support@my.com" url="https://www.deneme.com">My</vendor>
@@ -15,7 +15,32 @@
          Guidelines: https://plugins.jetbrains.com/docs/marketplace/plugin-overview-page.html#plugin-description -->
     <description>
         <![CDATA[
-        Hello world! Plugin for navigating between controllers and their handlers.
+        <p>Handler-navigator is a plugin that helps you to navigate between handler methods and their usages.</p>
+        <p>It provides a gutter icon that allows you to navigate to the handler method from the usage and vice versa.</p>
+        <p>It also provides a popup that shows the usages of the handler method.</p>
+        <p>It supports Spring MVC, Spring WebFlux, and JAX-RS annotations.</p>
+        <p>It also supports the following handler methods:</p>
+        <ul>
+        <li>Controller methods</li>
+        <li>Request mapping methods</li>
+        <li>Handler methods</li>
+        <li>Router functions</li>
+        </ul>
+        <p>It also supports the following handler method arguments:</p>
+        <ul>
+        <li>Request parameters</li>
+        <li>Path variables</li>
+        <li>Request bodies</li>
+        <li>Request headers</li>
+        <li>Request parts</li>
+        <li>Request attributes</li>
+        <li>Session attributes</li>
+        <li>Model attributes</li>
+        <li>Principal</li>
+        <li>Authentication</li>
+        <li>Locale</li>
+        <li>TimeZone</li>
+        </ul>
         ]]>
     </description>
     <version>2</version>
@@ -25,6 +50,7 @@
     <depends>com.intellij.modules.platform</depends>
     <depends>org.jetbrains.kotlin</depends>
     <depends>com.intellij.modules.java</depends>
+
 
     <extensions defaultExtensionNs="com.intellij">
         <codeInsight.lineMarkerProvider

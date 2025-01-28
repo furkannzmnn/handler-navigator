@@ -24,6 +24,6 @@ class HandlerMarkerBuilder {
     }
 
     private fun getNavigationIcon(): Icon {
-        return IconManager.getInstance().getIcon("AllIcons.General.Add", javaClass)
+        return IconManager.getInstance().getIcon("/icon/navigate.svg", javaClass)
     }
 }

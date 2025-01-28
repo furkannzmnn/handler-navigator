@@ -15,6 +15,16 @@ class AnnotationService {
 
     private fun isTargetAnnotation(annotationName: String): Boolean {
         return annotationName == "org.springframework.web.bind.annotation.PostMapping" ||
-                annotationName == "org.springframework.web.bind.annotation.GetMapping"
+                annotationName == "org.springframework.web.bind.annotation.GetMapping" ||
+                annotationName == "org.springframework.web.bind.annotation.PutMapping" ||
+                annotationName == "org.springframework.web.bind.annotation.DeleteMapping" ||
+                annotationName == "org.springframework.web.bind.annotation.PatchMapping" ||
+                annotationName == "org.springframework.web.bind.annotation.RequestMapping" ||
+                annotationName == "PostMapping" ||
+                annotationName == "GetMapping" ||
+                annotationName == "PutMapping" ||
+                annotationName == "DeleteMapping" ||
+                annotationName == "PatchMapping" ||
+                annotationName == "RequestMapping"
     }
 }

@@ -2,6 +2,7 @@ package com.modulith.handlernavigator
 
 import com.intellij.codeInsight.daemon.RelatedItemLineMarkerInfo
 import com.intellij.codeInsight.daemon.RelatedItemLineMarkerProvider
+import com.intellij.openapi.project.Project
 import com.intellij.psi.PsiAnnotation
 import com.intellij.psi.PsiElement
 import com.intellij.psi.PsiMethod
@@ -12,6 +13,7 @@ import com.modulith.handlernavigator.service.HandlerService
 import com.modulith.handlernavigator.service.UseCaseService
 
 class HandlerNavigatorProvider : RelatedItemLineMarkerProvider() {
+
     private val annotationService = AnnotationService()
     private val useCaseService = UseCaseService()
     private val handlerService = HandlerService()
@@ -22,10 +24,10 @@ class HandlerNavigatorProvider : RelatedItemLineMarkerProvider() {
         result: MutableCollection<in RelatedItemLineMarkerInfo<*>>
     ) {
         if (!isValidAnnotationElement(element)) return
-        
+
         val annotation = element as PsiAnnotation
         val navigationChain = buildNavigationChain(annotation) ?: return
-        
+
         addNavigationMarker(annotation, navigationChain.handlerClass, result)
     }
 
@@ -34,7 +36,8 @@ class HandlerNavigatorProvider : RelatedItemLineMarkerProvider() {
         return annotationService.isValidAnnotation(element)
     }
 
-    private data class NavigationChain(val method: PsiMethod, val useCaseClass: PsiClass, val handlerClass: PsiClass)
+
+        private data class NavigationChain(val method: PsiMethod, val useCaseClass: PsiClass, val handlerClass: PsiClass)
 
     private fun buildNavigationChain(annotation: PsiAnnotation): NavigationChain? {
         val method = getMethodFromAnnotation(annotation) ?: return null

@@ -1,5 +1,6 @@
 package com.modulith.handlernavigator.service
 
+import com.intellij.openapi.project.Project
 import com.intellij.psi.*
 import com.intellij.psi.util.PsiTreeUtil
 
