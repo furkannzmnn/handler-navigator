@@ -26,7 +26,7 @@ class HandlerService {
                 true
             },
             scope,
-            "<$useCaseName>", // Generics kullanımında aranacak desen
+            "<$useCaseName>",
             UsageSearchContext.IN_CODE,
             true
         )
