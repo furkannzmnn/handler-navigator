@@ -10,26 +10,20 @@ import com.intellij.psi.search.PsiShortNamesCache
 import com.intellij.psi.search.UsageSearchContext
 
 class HandlerService {
+    private val searchService = PsiSearchService.getInstance()
+    private val cache = PsiElementCache.getInstance()
+
     fun findHandlerClass(useCaseClass: PsiClass, project: Project): PsiClass? {
         val scope = GlobalSearchScope.projectScope(project)
-        val psiSearchHelper = PsiSearchHelper.getInstance(project)
         val useCaseName = useCaseClass.name ?: return null
+        val qualifiedName = useCaseClass.qualifiedName ?: return null
+
+        // Try to get from cache first
+        val cachedHandler = cache.getCachedClass("handler:$qualifiedName", project)
+        if (cachedHandler != null) return cachedHandler
 
         val foundClasses = mutableSetOf<PsiClass>()
-
-        psiSearchHelper.processElementsWithWord(
-            { element, _ ->
-                val psiClass = findContainingPsiClass(element) ?: return@processElementsWithWord true
-                if (psiClass.referencesUseCase(useCaseClass)) {
-                    foundClasses.add(psiClass)
-                }
-                true
-            },
-            scope,
-            useCaseClass.name ?: return null,
-            UsageSearchContext.IN_CODE,
-            true
-        )
+        val elements = searchService.findElementsByWord(useCaseName, project, scope)
 
         return foundClasses.firstOrNull() ?: findHandlerClassOtherOption(useCaseClass, project)
     }
