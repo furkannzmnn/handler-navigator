@@ -26,7 +26,7 @@ class HandlerService {
                 true
             },
             scope,
-            "<$useCaseName>",
+            useCaseClass.qualifiedName ?: return null,
             UsageSearchContext.IN_CODE,
             true
         )
