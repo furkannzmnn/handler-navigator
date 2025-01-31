@@ -29,6 +29,22 @@ class UseCaseService {
             }
         }
 
+        methodCalls.argumentList.expressions.forEach { arg ->
+            if (arg is PsiNewExpression) {
+                val resolvedClass = arg.classReference?.resolve() as? PsiClass
+                if (resolvedClass != null && isUseCase(resolvedClass)) {
+                    potentialUseCaseClasses.add(resolvedClass)
+                }
+            }
+        }
+
+        val newExpressions = PsiTreeUtil.findChildrenOfType(methodBody, PsiNewExpression::class.java)
+        newExpressions.forEach { newExpr ->
+            val resolvedClass = newExpr.classReference?.resolve() as? PsiClass
+            if (resolvedClass != null && isUseCase(resolvedClass)) {
+                potentialUseCaseClasses.add(resolvedClass)
+            }
+        }
     }
 
     private fun findUseCaseFromParameters(method: PsiMethod, potentialUseCaseClasses: MutableList<PsiClass>) {
@@ -59,6 +75,6 @@ class UseCaseService {
 
     private fun isUseCase(psiClass: PsiClass?): Boolean {
         if (psiClass == null) return false
-        return psiClass.interfaces.any { it.name == "UseCase" || it.name == "Message" }
+        return psiClass.interfaces.any { it.name == "UseCase" } || psiClass.superClass?.name == "Message"
     }
 }
