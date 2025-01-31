@@ -5,7 +5,7 @@ plugins {
 }
 
 group = "com.modulith"
-version = "2.0-prod"
+version = "2.1-prod-latest"
 
 repositories {
     mavenCentral()
@@ -34,15 +34,10 @@ tasks {
     }
 
     patchPluginXml {
-        sinceBuild.set("233")
+        sinceBuild.set("233.*")
         untilBuild.set("245.*")
     }
 
-    signPlugin {
-        certificateChain.set(System.getenv("CERTIFICATE_CHAIN"))
-        privateKey.set(System.getenv("PRIVATE_KEY"))
-        password.set(System.getenv("PRIVATE_KEY_PASSWORD"))
-    }
 
     publishPlugin {
         token.set("perm-b3ptZW5mOTc=.OTItMTE2NzU=.BkhTuPSXchadTP2RHDvewDO1L6BPTO")

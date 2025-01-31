@@ -27,13 +27,41 @@ class UseCaseService {
                     potentialUseCaseClasses.add(resolvedClass)
                 }
             }
-        }
 
-        methodCalls.argumentList.expressions.forEach { arg ->
-            if (arg is PsiNewExpression) {
-                val resolvedClass = arg.classReference?.resolve() as? PsiClass
-                if (resolvedClass != null && isUseCase(resolvedClass)) {
-                    potentialUseCaseClasses.add(resolvedClass)
+
+            methodCall.argumentList.expressions.forEach { arg ->
+                if (arg is PsiNewExpression) {
+                    val resolvedClass = arg.classReference?.resolve() as? PsiClass
+                    if (resolvedClass != null && isUseCase(resolvedClass)) {
+                        potentialUseCaseClasses.add(resolvedClass)
+                    }
+                }
+
+                if (arg is PsiRecordComponent) {
+                    val recordClass = arg.containingClass
+                    if (recordClass != null && isUseCase(recordClass)) {
+                        potentialUseCaseClasses.add(recordClass)
+                    }
+                }
+                
+
+                // Eğer argüman bir method çağrısıysa (builder().build() gibi)
+                if (arg is PsiMethodCallExpression) {
+                    val methodRef = arg.methodExpression.referenceName
+                    if (methodRef == "build") { // builder().build() çağrısını yakala
+                        val qualifier = arg.methodExpression.qualifierExpression
+                        if (qualifier is PsiMethodCallExpression) {
+                            val builderMethodRef = qualifier.methodExpression.referenceName
+                            if (builderMethodRef == "builder") { // builder() çağrısını analiz et
+                                val resolvedClass = qualifier.methodExpression.resolve() as? PsiMethod
+                                resolvedClass?.containingClass?.let { builderClass ->
+                                    if (isUseCase(builderClass)) {
+                                        potentialUseCaseClasses.add(builderClass)
+                                    }
+                                }
+                            }
+                        }
+                    }
                 }
             }
         }
@@ -75,6 +103,14 @@ class UseCaseService {
 
     private fun isUseCase(psiClass: PsiClass?): Boolean {
         if (psiClass == null) return false
-        return psiClass.interfaces.any { it.name == "UseCase" } || psiClass.superClass?.name == "Message"
+
+        val isBaseUseCase = psiClass.interfaces.any { it.name == "UseCase" } || psiClass.superClass?.name == "Message"
+
+        val hasBuilder = psiClass.annotations.any { it.qualifiedName?.contains("Builder") == true }
+        val hasPrivateFields = psiClass.fields.any { it.hasModifierProperty(PsiModifier.PRIVATE) }
+
+
+        val isRecordClass = psiClass.isRecord
+        return isBaseUseCase || (hasBuilder && hasPrivateFields) || isRecordClass
     }
 }

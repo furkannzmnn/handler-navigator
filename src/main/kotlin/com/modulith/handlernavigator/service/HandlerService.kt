@@ -26,7 +26,7 @@ class HandlerService {
                 true
             },
             scope,
-            useCaseClass.qualifiedName ?: return null,
+            useCaseClass.name ?: return null,
             UsageSearchContext.IN_CODE,
             true
         )
@@ -48,7 +48,25 @@ class HandlerService {
 
     private fun PsiClass.referencesUseCase(useCaseClass: PsiClass): Boolean {
         val useCaseQualifiedName = useCaseClass.qualifiedName ?: return false
-        return this.implementsOrExtends(useCaseQualifiedName) || this.referencesInGenerics(useCaseQualifiedName)
+
+        return this.implementsOrExtends(useCaseQualifiedName) ||
+                this.referencesInGenerics(useCaseQualifiedName) ||
+                this.referencesInConstructors(useCaseQualifiedName) ||
+                this.referencesAsInstanceVariable(useCaseQualifiedName)
+    }
+
+    //  Constructor içinde `UseCase` var mı?
+    private fun PsiClass.referencesInConstructors(useCaseQualifiedName: String): Boolean {
+        return this.constructors.any { constructor ->
+            constructor.parameterList.parameters.any { param ->
+                param.type.canonicalText.contains(useCaseQualifiedName)
+            }
+        }
+    }
+
+    // Sınıf içinde değişken olarak `UseCase` var mı?
+    private fun PsiClass.referencesAsInstanceVariable(useCaseQualifiedName: String): Boolean {
+        return this.fields.any { field -> field.type.canonicalText.contains(useCaseQualifiedName) }
     }
 
     private fun PsiClass.implementsOrExtends(useCaseQualifiedName: String): Boolean {
@@ -66,14 +84,18 @@ class HandlerService {
 
     fun findHandlerClassOtherOption(useCaseClass: PsiClass, project: Project): PsiClass? {
         val scope = GlobalSearchScope.everythingScope(project)
-        val handlerSuffix = findHandlerName(useCaseClass, "Handler")
-        val useCaseHandlerSuffix = findHandlerName(useCaseClass, "UseCaseHandler")
+
+        val possibleNames = listOf(
+                findHandlerName(useCaseClass, "Handler"),
+                findHandlerName(useCaseClass, "UseCaseHandler"),
+                findHandlerName(useCaseClass, "CommandHandler"),
+                findHandlerName(useCaseClass, "Service")
+        )
 
         val psiShortNamesCache = PsiShortNamesCache.getInstance(project)
-        val handlerClass = psiShortNamesCache.getClassesByName(handlerSuffix, scope).firstOrNull()
-        val useCaseHandlerClass = psiShortNamesCache.getClassesByName(useCaseHandlerSuffix, scope).firstOrNull()
-
-        return handlerClass ?: useCaseHandlerClass
+        return possibleNames
+                .mapNotNull { handlerName -> psiShortNamesCache.getClassesByName(handlerName, scope).firstOrNull() }
+                .firstOrNull()
     }
 
     private fun findHandlerName(useCaseClass: PsiClass, handlerSuffix: String ): String {
