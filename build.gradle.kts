@@ -5,7 +5,7 @@ plugins {
 }
 
 group = "com.modulith"
-version = "2.1-prod-latest"
+version = "2.3-latest"
 
 repositories {
     mavenCentral()

@@ -44,7 +44,7 @@
     ]]>
     </description>
 
-    <version>2.1-prod-latest</version>
+    <version>2.3-latest</version>
 
     <depends>com.intellij.modules.platform</depends>
     <depends>org.jetbrains.kotlin</depends>
