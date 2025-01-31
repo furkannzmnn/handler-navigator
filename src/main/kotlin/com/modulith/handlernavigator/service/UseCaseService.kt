@@ -58,6 +58,6 @@ class UseCaseService {
 
     private fun isUseCase(psiClass: PsiClass?): Boolean {
         if (psiClass == null) return false
-        return psiClass.interfaces.any { it.name == "UseCase" || it.name == "Message"  }
+        return psiClass.interfaces.any { it.name == "UseCase" } || psiClass.superClass?.name == "Message"
     }
 }
