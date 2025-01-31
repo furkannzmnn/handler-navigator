@@ -28,6 +28,7 @@ class UseCaseService {
                 }
             }
         }
+
     }
 
     private fun findUseCaseFromParameters(method: PsiMethod, potentialUseCaseClasses: MutableList<PsiClass>) {
@@ -58,6 +59,6 @@ class UseCaseService {
 
     private fun isUseCase(psiClass: PsiClass?): Boolean {
         if (psiClass == null) return false
-        return psiClass.interfaces.any { it.name == "UseCase" || it.name == "Message"  }
+        return psiClass.interfaces.any { it.name == "UseCase" || it.name == "Message" }
     }
 }

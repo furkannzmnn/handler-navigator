@@ -5,7 +5,7 @@ plugins {
 }
 
 group = "com.modulith"
-version = "1.0-SNAPSHOT"
+version = "2.0-prod"
 
 repositories {
     mavenCentral()
@@ -34,7 +34,7 @@ tasks {
     }
 
     patchPluginXml {
-        sinceBuild.set("243")
+        sinceBuild.set("233")
         untilBuild.set("245.*")
     }
 

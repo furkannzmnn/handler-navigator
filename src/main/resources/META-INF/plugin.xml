@@ -8,45 +8,44 @@
     <name>Handler-Navigator</name>
 
     <!-- A displayed Vendor name or Organization ID displayed on the Plugins Page. -->
-    <vendor email="support@my.com" url="https://www.deneme.com">My</vendor>
+    <vendor email="fozmenfurkan@gmail.com" url="https://www.linkedin.com/in/furknnzmnn/">Linkedin Link</vendor>
 
     <!-- Description of the plugin displayed on the Plugin Page and IDE Plugin Manager.
          Simple HTML elements (text formatting, paragraphs, and lists) can be added inside of <![CDATA[ ]]> tag.
          Guidelines: https://plugins.jetbrains.com/docs/marketplace/plugin-overview-page.html#plugin-description -->
     <description>
         <![CDATA[
-        <p>Handler-navigator is a plugin that helps you to navigate between handler methods and their usages.</p>
-        <p>It provides a gutter icon that allows you to navigate to the handler method from the usage and vice versa.</p>
-        <p>It also provides a popup that shows the usages of the handler method.</p>
-        <p>It supports Spring MVC, Spring WebFlux, and JAX-RS annotations.</p>
-        <p>It also supports the following handler methods:</p>
-        <ul>
+    <p><strong>Handler-Navigator</strong> is an IntelliJ IDEA plugin designed to streamline navigation between handler methods and their usages, boosting productivity for developers working with Spring and JAX-RS frameworks.</p>
+
+    <p>With an intuitive <strong>gutter icon</strong> and <strong>popup navigation</strong>, this plugin allows you to seamlessly jump between handlers and their corresponding usages, making code exploration effortless.</p>
+
+    <p><strong>Key Features:</strong></p>
+    <ul>
+        <li>Quick navigation between handler methods and their references</li>
+        <li>Clickable gutter icons for fast access</li>
+        <li>Popup display of handler method usages</li>
+        <li>Supports <strong>Spring MVC, Spring WebFlux, and JAX-RS</strong></li>
+    </ul>
+
+    <p><strong>Supported Handler Methods:</strong></p>
+    <ul>
         <li>Controller methods</li>
         <li>Request mapping methods</li>
         <li>Handler methods</li>
         <li>Router functions</li>
-        </ul>
-        <p>It also supports the following handler method arguments:</p>
-        <ul>
-        <li>Request parameters</li>
-        <li>Path variables</li>
-        <li>Request bodies</li>
-        <li>Request headers</li>
-        <li>Request parts</li>
-        <li>Request attributes</li>
-        <li>Session attributes</li>
-        <li>Model attributes</li>
-        <li>Principal</li>
-        <li>Authentication</li>
-        <li>Locale</li>
-        <li>TimeZone</li>
-        </ul>
-        ]]>
-    </description>
-    <version>2</version>
+    </ul>
 
-    <!-- Product and plugin compatibility requirements.
-         Read more: https://plugins.jetbrains.com/docs/intellij/plugin-compatibility.html -->
+    <p><strong>Supported Argument Types:</strong></p>
+    <ul>
+        <li>Request parameters, path variables, request bodies, and headers</li>
+    </ul>
+
+    <p>Enhance your development workflow with <strong>Handler-Navigator</strong> and make navigating handler methods smoother than ever!</p>
+    ]]>
+    </description>
+
+    <version>2.1</version>
+
     <depends>com.intellij.modules.platform</depends>
     <depends>org.jetbrains.kotlin</depends>
     <depends>com.intellij.modules.java</depends>
