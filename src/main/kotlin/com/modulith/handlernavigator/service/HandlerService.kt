@@ -31,7 +31,13 @@ class HandlerService {
             true
         )
 
-        return foundClasses.firstOrNull() ?: findHandlerClassOtherOption(useCaseClass, project)
+        val searchClass = foundClasses
+                .filter { it.name?.startsWith("Fake") == false }
+                .firstOrNull { it.superTypes.any { superType -> superType.canonicalText.contains("MessageHandler") } }
+
+        val otherOption = findHandlerClassOtherOption(useCaseClass, project)
+        return searchClass ?: otherOption
+
     }
 
     private fun findContainingPsiClass(element: PsiElement): PsiClass? {
@@ -89,12 +95,12 @@ class HandlerService {
                 findHandlerName(useCaseClass, "Handler"),
                 findHandlerName(useCaseClass, "UseCaseHandler"),
                 findHandlerName(useCaseClass, "CommandHandler"),
-                findHandlerName(useCaseClass, "Service")
+                findHandlerName(useCaseClass, "MessageHandler"),
         )
 
         val psiShortNamesCache = PsiShortNamesCache.getInstance(project)
-        return possibleNames
-                .mapNotNull { handlerName -> psiShortNamesCache.getClassesByName(handlerName, scope).firstOrNull() }
+        return  possibleNames
+                .mapNotNull { psiShortNamesCache.getClassesByName(it, scope).firstOrNull() }
                 .firstOrNull()
     }
 
