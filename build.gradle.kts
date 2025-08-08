@@ -19,8 +19,6 @@ dependencies {
         intellijIdeaUltimate("2024.3.2")
         bundledPlugin("com.intellij.java")
     }
-    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
-    implementation("org.jetbrains.kotlin:kotlin-reflect")
     testImplementation("junit:junit:4.13.2")
 }
 
